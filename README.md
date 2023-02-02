@@ -4,6 +4,7 @@ A Web Scraper for Games-Stats
 # Available functions
 
 * `gs_marketing_tool()` - Get Data from Steam Marketing Tool
+* `gs_tags_stats()` - Get Data from Steam Tags Stats
 
 ### Author
 
