@@ -1,0 +1,12 @@
+Package: gamesrstats
+Type: Package
+Title: A Web Scraper for Games-Stats
+Version: 0.1.0
+Author: Kirill Mukhin
+Maintainer: Kirill Mukhin <muzerow6@gmail.com>
+Description: Scrape Games-Stats portal.
+Imports: dplyr, rvest, stringr
+License: MIT
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
