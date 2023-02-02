@@ -1,7 +1,7 @@
 Package: gamesrstats
 Type: Package
 Title: A Web Scraper for Games-Stats
-Version: 0.1.0
+Version: 0.2.0
 Author: Kirill Mukhin
 Maintainer: Kirill Mukhin <muzerow6@gmail.com>
 Description: Scrape Games-Stats portal.

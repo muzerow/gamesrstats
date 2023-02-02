@@ -1,6 +1,6 @@
 #' Get Data from Steam Marketing Tool
 #' @description Get Data from Steam Marketing Tool <https://games-stats.com/steam>
-#' @importFrom dplyr %>% mutate select
+#' @importFrom dplyr %>% case_when mutate select
 #' @importFrom rvest html_element read_html html_table
 #' @importFrom stringr str_detect str_glue str_split str_trim
 #'
@@ -14,7 +14,6 @@ gs_marketing_tool <- function(tag, page) {
     html_element("table") %>%
     html_table()
 
-  colnames(web_page)[1] <- "id"
   colnames(web_page)[2] <- "description"
 
   Sys.setlocale("LC_TIME", "English")
@@ -29,9 +28,9 @@ gs_marketing_tool <- function(tag, page) {
            followers = as.numeric(gsub("\\D+", "", Followers)),
            reviews = as.numeric(gsub("\\D+", "", Reviews)),
            score = as.numeric(sub("/.*", "", Score)),
-           net_revenue = ifelse(str_detect(`Net Revenue`, "million"),
-                                as.numeric(gsub("\\D+", "", `Net Revenue`)) * 1000000,
-                                as.numeric(gsub("\\D+", "", `Net Revenue`)))) %>%
-    select(id, description, title, publisher, developer, release_date,
+           net_revenue = case_when(str_detect(`Net Revenue`, "billion") ~ as.numeric(gsub("\\D+", "", `Net Revenue`)) * 1000000000,
+                                   str_detect(`Net Revenue`, "million") ~ as.numeric(gsub("\\D+", "", `Net Revenue`)) * 1000000,
+                                   !is.na(`Net Revenue`) ~ as.numeric(gsub("\\D+", "", `Net Revenue`)))) %>%
+    select(id = `#`, description, title, publisher, developer, release_date,
            price, tags = Tags, followers, reviews, score, net_revenue)
 }
