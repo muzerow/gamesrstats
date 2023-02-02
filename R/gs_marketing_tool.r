@@ -2,7 +2,7 @@
 #' @description Get Data from Steam Marketing Tool <https://games-stats.com/steam>
 #' @importFrom dplyr %>% mutate select
 #' @importFrom rvest html_element read_html html_table
-#' @importFrom stringr str_glue str_split str_trim
+#' @importFrom stringr str_detect str_glue str_split str_trim
 #'
 #' @param tag Steam tag
 #' @param page Page number
