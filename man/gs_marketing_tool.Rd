@@ -4,12 +4,14 @@
 \alias{gs_marketing_tool}
 \title{Get Data from Steam Marketing Tool}
 \usage{
-gs_marketing_tool(tag, page)
+gs_marketing_tool(tags, page, vr = "all")
 }
 \arguments{
-\item{tag}{Steam tag}
+\item{tags}{Steam tags vector}
 
 \item{page}{Page number}
+
+\item{vr}{VR filter}
 }
 \description{
 Get Data from Steam Marketing Tool <https://games-stats.com/steam>

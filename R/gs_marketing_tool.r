@@ -4,13 +4,16 @@
 #' @importFrom rvest html_element read_html html_table
 #' @importFrom stringr str_detect str_glue str_split str_trim
 #'
-#' @param tag Steam tag
+#' @param tags Steam tags vector
 #' @param page Page number
+#' @param vr VR filter
 #'
 #' @export
 
-gs_marketing_tool <- function(tag, page) {
-  web_page <- read_html(str_glue("https://games-stats.com/steam/?tag={tag}&page={page}")) %>%
+gs_marketing_tool <- function(tags, page, vr = "all") {
+  tags_url <- paste0("tag=", tags, collapse = "&")
+
+  web_page <- read_html(str_glue("https://games-stats.com/steam/?{tags_url}&page={page}&vr={vr}")) %>%
     html_element("table") %>%
     html_table()
 
