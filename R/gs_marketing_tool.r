@@ -1,19 +1,31 @@
 #' Get Data from Steam Marketing Tool
 #' @description Get Data from Steam Marketing Tool <https://games-stats.com/steam>
 #' @importFrom dplyr %>% case_when mutate select
-#' @importFrom rvest html_element read_html html_table
-#' @importFrom stringr str_detect str_glue str_split str_trim
+#' @importFrom httr GET content
+#' @importFrom rvest html_element html_table
+#' @importFrom stringr str_detect str_split str_trim
 #'
 #' @param tags Steam tags vector
 #' @param page Page number
+#' @param platforms Platforms vector
 #' @param vr VR filter
+#' @param title Game title
+#' @param developers Game developers vector
+#' @param publishers Game publishers vector
 #'
 #' @export
 
-gs_marketing_tool <- function(tags, page, vr = "all") {
-  tags_url <- paste0("tag=", tags, collapse = "&")
-
-  web_page <- read_html(str_glue("https://games-stats.com/steam/?{tags_url}&page={page}&vr={vr}")) %>%
+gs_marketing_tool <- function(tags = NULL, page = NULL, platforms = NULL, vr = NULL,
+                              title = NULL, developers = NULL, publishers = NULL) {
+  web_page <- GET("https://games-stats.com/steam/?",
+      query = list(tag = paste0(tags, collapse = "&tag="),
+                   page = page,
+                   platform = paste0(platforms, collapse = "&platform="),
+                   vr = vr,
+                   title = title,
+                   developer = paste0(developers, collapse = "&developer="),
+                   publisher = paste0(publishers, collapse = "&publisher="))) %>%
+    content() %>%
     html_element("table") %>%
     html_table()
 
