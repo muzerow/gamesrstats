@@ -2,7 +2,7 @@
 #' @description Get Data from Steam Marketing Tool <https://games-stats.com/steam>
 #' @importFrom dplyr %>% case_when mutate select
 #' @importFrom rvest html_element html_table
-#' @importFrom stringr str_detect str_remove_all str_split str_to_lower str_trim
+#' @importFrom stringr str_detect str_replace_all str_split str_to_lower str_trim
 #'
 #' @param tags Steam tags vector
 #' @param page Page number
@@ -25,7 +25,7 @@ gs_marketing_tool <- function(tags = NULL, page = NULL, platforms = NULL, vr = N
   for (i in names(multiple_params)) {
     if (!is.null(multiple_params[i][[1]])) {
       param <- names(multiple_params[i])
-      value <- str_remove_all(str_to_lower(multiple_params[i][[1]]), "[[:punct:]]")
+      value <- str_replace_all(str_replace_all(str_to_lower(multiple_params[i][[1]]), "[^-[:^punct:]]", ""), " ", "-")
 
       param_url <- paste0(param, "=", paste0(value, collapse = paste0("&", param, "=")))
       query_url <- paste(query_url, param_url, sep = "&")
