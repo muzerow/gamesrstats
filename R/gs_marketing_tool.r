@@ -1,9 +1,8 @@
 #' Get Data from Steam Marketing Tool
 #' @description Get Data from Steam Marketing Tool <https://games-stats.com/steam>
 #' @importFrom dplyr %>% case_when mutate select
-#' @importFrom httr GET content
 #' @importFrom rvest html_element html_table
-#' @importFrom stringr str_detect str_split str_trim
+#' @importFrom stringr str_detect str_remove_all str_split str_to_lower str_trim
 #'
 #' @param tags Steam tags vector
 #' @param page Page number
