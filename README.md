@@ -1,6 +1,12 @@
 # gamesrstats <img src='https://raw.githubusercontent.com/muzerow/gamesrstats/master/inst/gamesrstats.png' align="right" height="139" /></a>
 A Web Scraper for Games-Stats
 
+# Installation
+
+```r
+remotes::install_github("muzerow/gamesrstats")
+```
+
 # Available functions
 
 * `gs_marketing_tool()` - Get Data from Steam Marketing Tool
