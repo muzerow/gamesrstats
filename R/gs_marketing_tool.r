@@ -17,15 +17,27 @@
 
 gs_marketing_tool <- function(tags = NULL, page = NULL, platforms = NULL, vr = NULL,
                               title = NULL, developers = NULL, publishers = NULL) {
-  web_page <- GET("https://games-stats.com/steam/?",
-      query = list(tag = paste0(tags, collapse = "&tag="),
-                   page = page,
-                   platform = paste0(platforms, collapse = "&platform="),
-                   vr = vr,
-                   title = title,
-                   developer = paste0(developers, collapse = "&developer="),
-                   publisher = paste0(publishers, collapse = "&publisher="))) %>%
-    content() %>%
+  base_url <- "https://games-stats.com/steam/?"
+  query_url <- ""
+
+  multiple_params <- list("tag" = tags, "page" = page, "platform" = platforms, "vr" = vr,
+                          "title" = title ,"developer" = developers, "publisher" = publishers)
+
+  for (i in names(multiple_params)) {
+    if (!is.null(multiple_params[i][[1]])) {
+      param <- names(multiple_params[i])
+      value <- str_remove_all(str_to_lower(multiple_params[i][[1]]), "[[:punct:]]")
+
+      param_url <- paste0(param, "=", paste0(value, collapse = paste0("&", param, "=")))
+      query_url <- paste(query_url, param_url, sep = "&")
+    }
+  }
+
+  if (substr(query_url, 1, 1) == "&") { query_url <- substr(query_url, 2, nchar(query_url)) }
+
+  url <- paste0(base_url, query_url)
+
+  web_page <- read_html(url) %>%
     html_element("table") %>%
     html_table()
 
